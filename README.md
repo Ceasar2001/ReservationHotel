@@ -11,10 +11,10 @@
 
 ### To Setup the Django project
 ## clone the repository
-    # git clone https://github.com/Ceasar2001/ReservationHotel
+     git clone https://github.com/Ceasar2001/ReservationHotel
 ## migrate the database
-    # python manage.py makemigrations
-    # python manage.py migrate
+     python manage.py makemigrations
+     python manage.py migrate
 
 ## run server
     # python manage.py runserver
