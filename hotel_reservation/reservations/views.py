@@ -14,33 +14,15 @@ def send_sms_notification(name, phone_number):
     auth_token = settings.TWILIO_AUTH_TOKEN
     twilio_phone_number = settings.TWILIO_PHONE_NUMBER
 
-    # Ensure the phone number is in E.164 format
-    if not phone_number.startswith('+'):
-        phone_number = '+' + phone_number
-
     client = Client(account_sid, auth_token)
 
-    try:
-        message = client.messages.create(
-            body=f"Dear {name}, your reservation has been successfully booked!",
-            from_=twilio_phone_number,
-            to=phone_number
-        )
-        return message.sid
-    except Exception as e:
-        # Handle exceptions (e.g., invalid phone number)
-        print(f"Error sending SMS: {str(e)}")
-        return None
+    message = client.messages.create(
+        body=f"Dear {name}, your reservation has been successfully booked!",
+        from_=twilio_phone_number,
+        to=phone_number
+    )
 
-# def reservation_create(request):
-#     if request.method == 'POST':
-#         form = ReservationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('reservation_list')
-#     else:
-#         form = ReservationForm()
-#     return render(request, 'reservations/reservation_form.html', {'form': form})
+    return message.sid
 
 def reservation_create(request):
     if request.method == 'POST':
