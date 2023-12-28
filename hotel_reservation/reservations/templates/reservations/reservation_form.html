@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% if reservation %}Update{% else %}Create{% endif %} Reservation</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
 </head>
 <body>
 
@@ -30,10 +34,28 @@
                         <div class="form-group col-md-6">
                             <label for="{{ form.check_in_date.id_for_label }}">Check-In Date:</label>
                             {{ form.check_in_date }}
+                            <script>
+                                $(document).ready(function(){
+                                    $('[name="{{ form.check_in_date.name }}"]').datepicker({
+                                        format: 'yyyy-mm-dd',
+                                        todayHighlight: true,
+                                        autoclose: true
+                                    });
+                                });
+                            </script>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="{{ form.check_out_date.id_for_label }}">Check-Out Date:</label>
                             {{ form.check_out_date }}
+                            <script>
+                                $(document).ready(function(){
+                                    $('[name="{{ form.check_out_date.name }}"]').datepicker({
+                                        format: 'yyyy-mm-dd',
+                                        todayHighlight: true,
+                                        autoclose: true
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">{% if reservation %}Update{% else %}Submit{% endif %}</button>
