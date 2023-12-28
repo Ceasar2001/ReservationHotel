@@ -47,8 +47,14 @@
         <div class="jumbotron">
             <h1 class="display-4 fw-bold">Welcome to Our Hotel Reservation System</h1>
             <p class="lead">Explore our services and make your reservation today!</p>
-                <a href="{% url 'reservation_list' %}" class="btn btn-success ml-2">View Reservations</a>
-                <a href="{% url 'reservation_create' %}" class="btn btn-secondary ml-2">Create Reservation</a>
+            <div class="buttons d-flex justify-content-center">
+                <button type="button" class="btn btn-primary mr-5">
+                    <a href="{% url 'reservation_list' %}" class="text-white">View Reservations</a>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <a href="{% url 'reservation_create' %}" class="text-white">Create Reservation</a>
+                </button>
+            </div>
         </div>
     </div>
 
