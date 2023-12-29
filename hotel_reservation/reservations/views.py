@@ -4,25 +4,26 @@ from .forms import ReservationForm
 from .models import Reservation
 from django.contrib import messages
 from twilio.rest import Client
+from .send_sms import sendsms
 
 def reservation_list(request):
     reservations = Reservation.objects.all()
     return render(request, 'reservations/reservation_list.html', {'reservations': reservations})
 
-def send_sms_notification(name, phone_number):
-    account_sid = settings.TWILIO_ACCOUNT_SID
-    auth_token = settings.TWILIO_AUTH_TOKEN
-    twilio_phone_number = settings.TWILIO_PHONE_NUMBER
+# def send_sms_notification(name, phone_number):
+#     account_sid = settings.TWILIO_ACCOUNT_SID
+#     auth_token = settings.TWILIO_AUTH_TOKEN
+#     twilio_phone_number = settings.TWILIO_PHONE_NUMBER
 
-    client = Client(account_sid, auth_token)
+#     client = Client(account_sid, auth_token)
 
-    message = client.messages.create(
-        body=f"Dear {name}, your reservation has been successfully booked!",
-        from_=twilio_phone_number,
-        to=phone_number
-    )
+#     message = client.messages.create(
+#         body=f"Dear {name}, your reservation has been successfully booked!",
+#         from_=twilio_phone_number,
+#         to="+639667204048"
+#     )
 
-    return message.sid
+#     return message.sid
 
 def reservation_create(request):
     if request.method == 'POST':
@@ -31,7 +32,7 @@ def reservation_create(request):
             reservation = form.save()
 
             # Send SMS notification
-            send_sms_notification(reservation.name, reservation.phone_number)
+            sendsms(reservation.name, reservation.phone_number)
 
             return redirect('reservation_list')
     else:
