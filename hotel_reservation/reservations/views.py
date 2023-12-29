@@ -4,11 +4,14 @@ from .forms import ReservationForm
 from .models import Reservation
 from django.contrib import messages
 from twilio.rest import Client
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def reservation_list(request):
     reservations = Reservation.objects.all()
     return render(request, 'reservations/reservation_list.html', {'reservations': reservations})
 
+@login_required
 def send_sms_notification(name, phone_number):
     account_sid = settings.TWILIO_ACCOUNT_SID
     auth_token = settings.TWILIO_AUTH_TOKEN
@@ -24,6 +27,7 @@ def send_sms_notification(name, phone_number):
 
     return message.sid
 
+@login_required
 def reservation_create(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
@@ -38,10 +42,11 @@ def reservation_create(request):
         form = ReservationForm()
     return render(request, 'reservations/reservation_form.html', {'form': form})
 
-
+@login_required
 def reservation_redirect(request):
     return redirect('reservation_list')
 
+@login_required
 def reservation_update(request, pk):
     reservation = get_object_or_404(Reservation, pk=pk)
 
@@ -55,6 +60,7 @@ def reservation_update(request, pk):
     messages.success(request, 'Reservation updated successfully.')
     return render(request, 'reservations/reservation_form.html', {'form': form, 'reservation': reservation})
 
+@login_required
 def reservation_delete(request, pk):
     reservation = get_object_or_404(Reservation, pk=pk)
     reservation.delete()
